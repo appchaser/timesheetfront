@@ -1,0 +1,136 @@
+<!-- <form #myForm="ngForm"> -->
+
+<div class="row a">
+
+  <div class="col-sm-4">
+    <h1>TimeSheet</h1>
+  </div>
+  <div class="col-sm-4">
+
+  </div>
+  <div class="col-sm-4"></div>
+
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <button class="btn btn-success" (click)="add()" style="border-radius: 60%; " [disabled]="isDisabled"> <i
+        class="fa fa-plus fa-2x"></i></button>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="dd/mm/yyyy" name="dp" ngbDatepicker [(ngModel)]="model"
+          (change)="changeDate()" [ngModelOptions]="{standalone: true}" appDate #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+              class="fa fa-calendar" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+
+</div>
+<div class="row">
+  <div class="col-md-3" style="display: flex; flex-direction: row;">
+    <div class="col">Add</div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <div class="col-md-5" style="display: flex; flex-direction: row;">
+    <div class="col"><span class="boxTitle">M</span></div>
+    <div class="col"><span class="boxTitle">T</span></div>
+    <div class="col"><span class="boxTitle">W</span></div>
+    <div class="col"><span class="boxTitle">T</span></div>
+    <div class="col"><span class="boxTitle">F</span></div>
+    <div class="col"><span class="boxTitle">SA</span></div>
+    <div class="col"><span class="boxTitle">SU</span></div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3" style="display: flex; flex-direction: row;">
+    <div class="col">Client:</div>
+    <div class="col">Project:</div>
+    <div class="col">Activity:</div>
+  </div>
+  <div class="col-md-5" style="display: flex; flex-direction: row;">
+    <div class="col"><span class="spanBox">{{mondaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{tuesdaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{wensdaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{thursdaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{fridaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{saturdaySum}}</span></div>
+    <div class="col"><span class="spanBox">{{sundaySum}}</span></div>
+  </div>
+  <div class="col-sm-3" style="display: flex; flex-direction: row;">
+    <div class="col"> <span class="boxGreen"><i class="fa fa-clock-o fa-1x" aria-hidden="true"></i></span></div>
+    <div class="col">
+      <p>Bill:</p>
+    </div>
+    <div class="col">
+      <p>Comment:</p>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+  <div class="row" *ngFor="let obj of dataArray;let i=index">
+
+    <div class="col-sm-3" style="display: flex; flex-direction: row; ">
+      <div class="col"><select [(ngModel)]="selectedClientId" style="width: 50px;" (change)="showProject()">
+          <option>select Client</option>
+          <option *ngFor="let obj of listClient" value="{{obj.id}}" >{{obj.name}}</option>
+        </select></div>
+      <div class="col"><select [(ngModel)]="selectedProjectId" (change)="showActivity()" style="width: 50px;">
+          <option>select Project</option>
+          <option *ngFor="let obj of projects" value="{{obj.id}}">{{obj.name}}</option>
+        </select></div>
+      <div class="col"><select [(ngModel)]="selectedActivityId" style="width: 50px;">
+          <option>select Activity</option>
+          <option *ngFor="let obj of activity" value="{{obj.id}}">{{obj.name}}</option>
+
+        </select></div>
+    </div>
+    <div class="col-md-5" style="display: flex; flex-direction: row;">
+      <div class="col"><input #mondayInput type="number" class="boxInput" maxlength="8" (change)="changeValueMonday(+mondayInput.value)" id="moday{{i}}"
+          name="moday{{i}}" [(ngModel)]="obj.date1_hours" /></div>
+      <div class="col"><input #tuesdayInput type="number" class="boxInput" (change)="changeValueMonday(+tuesdayInput.value)" id="tuesday{{i}}"
+          name="tuesday{{i}}" [(ngModel)]="obj.date2_hours" /></div>
+      <div class="col"><input #wednesdayInput type="number" class="boxInput" (change)="changeValueMonday(+wednesdayInput.value)" id="wensday{{i}}"
+          name="wensday{{i}}" [(ngModel)]="obj.date3_hours" /></div>
+      <div class="col"><input #thuesdayInput type="number" class="boxInput" (change)="changeValueMonday(+thuesdayInput.value)" id="thursday{{i}}"
+          name="thursday{{i}}" [(ngModel)]="obj.date4_hours" /></div>
+      <div class="col"><input #faridayInput type="number" class="boxInput" (change)="changeValueMonday(+faridayInput.value)" id="friday{{i}}"
+          name="friday{{i}}" [(ngModel)]="obj.date5_hours"
+           /></div>
+      <div class="col"><input #saturdayInput type="number" class="boxInput" (change)="changeValueMonday(+saturdayInput.value)" id="saturday{{i}}"
+          name="saturday{{i}}" [(ngModel)]="obj.date6_hours" /></div>
+      <div class="col"><input #sundayInput type="number" class="boxInput" (change)="changeValueMonday(+sundayInput.value)" id="sunday{{i}}"
+          name="sunday{{i}}" [(ngModel)]="obj.date7_hours" /></div>
+    </div>
+    <div class="col-md-3" style="display: flex; flex-direction: row;">
+      <div class="col"><span type="text" class="spanBox">{{summ}}</span></div>
+      <div class="col"></div>
+      <div class="col"><textarea name="desc{{i}}"></textarea></div>
+      <div class="col"></div>
+    </div>
+
+  </div>
+<!-- </form> -->
+
+<hr>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4" style="display: flex; gap: 15px;">
+    <button class="btn btn-danger rounded-pill" (click)="reset()">Reset</button>
+    <button class="btn btn-success rounded-pill" [disabled]="Disable" (click)="save()" >save</button>
+  </div>
+
+</div>
+

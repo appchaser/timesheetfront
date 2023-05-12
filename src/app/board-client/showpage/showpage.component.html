@@ -1,0 +1,112 @@
+
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <h1>View TimeSheet</h1>
+    </div>
+    <div class="col-sm-4"></div>
+
+  </div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <select id="week" (change)="change($event)" style="justify-content: center; width: 100%; margin: 10%;">
+        <option selected>**select week**</option>
+        <option *ngFor="let obj of listTimesheet" value="{{obj.id}}">{{obj.date1_day| date}}</option>
+      </select>
+    </div>
+    <div class="col-sm-4"></div>
+
+  </div>
+  <div class="row" style="margin: 0; padding: 0;">
+    <div class="col-sm-3" style="display: flex; flex-direction: row;">
+      <div class="col">Date</div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="col-md-5" style="display: flex; flex-direction: row;">
+      <div class="col"><span class="boxTitle">M</span></div>
+      <div class="col"><span class="boxTitle">T</span></div>
+      <div class="col"><span class="boxTitle">W</span></div>
+      <div class="col"><span class="boxTitle">T</span></div>
+      <div class="col"><span class="boxTitle">F</span></div>
+      <div class="col"><span class="boxTitle">SA</span></div>
+      <div class="col"><span class="boxTitle">SU</span></div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" style="display: flex; flex-direction: row;">
+      <div class="col">Client:</div>
+      <div class="col">Project:</div>
+      <div class="col">Activity:</div>
+    </div>
+    <div class="col-md-5" style="display: flex; flex-direction: row;">
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+      <div class="col"><span class="spanBox"></span></div>
+    </div>
+    <div class="col-sm-3" style="display: flex; flex-direction: row;">
+      <div class="col"> <span class="boxGreen"><i class="fa fa-clock-o fa-1x" aria-hidden="true"></i></span></div>
+      <div class="col">
+        <p>Bill:</p>
+      </div>
+      <div class="col">
+        <p>Comment:</p>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+  <div class="row">
+    <div class="col-sm-3" style="display: flex; flex-direction: row; ">
+        <div class="col"><select style="width: 50px;">
+          <option >select Client</option>
+          <option *ngFor="let obj of listClient" value="{{obj.id}}">{{obj.name}}</option>
+        </select></div>
+        <div class="col"><select style="width: 50px;" >
+          <option >select Project</option>
+          <option *ngFor="let obj of listPorjects" value="{{obj.id}}">{{obj.name}}</option>
+        </select></div>
+        <div class="col"><select style="width: 50px;" >
+          <option >select Activity</option>
+          <option *ngFor="let obj of listActivites" value="{{obj.id}}">{{obj.shortName}}</option>
+
+        </select></div>
+      </div>
+    <div class="col-md-5" style="display: flex; flex-direction: row;">
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date1_hours /></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date2_hours /></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date3_hours /></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date4_hours /></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date5_hours /></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date6_hours/></div>
+      <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date7_hours /></div>
+    </div>
+    <div class="col-sm-3" style="display: flex; flex-direction: row;">
+      <div class="col"><input type="text" class="boxInput" /></div>
+      <div class="col"></div>
+      <div class="col"><textarea></textarea></div>
+      <div class="col"><button class="btn btn-danger" (click)="deleteTimeSheet()" style="border-radius: 50%;"> <i class="fa fa-trash-o"
+            aria-hidden="true"></i></button></div>
+    </div>
+
+  </div>
+
+<hr>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4" style="display: flex; gap: 15px;">
+    <button class="btn btn-danger rounded-pill" (click)="sendEmail()">send mail to approver</button>
+    <button class="btn btn-success rounded-pill" (click)="update()">update</button>
+  </div>
+
+</div>

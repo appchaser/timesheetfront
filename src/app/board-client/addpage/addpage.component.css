@@ -1,0 +1,43 @@
+.boxInput{
+    width: 35px;
+    border: 1px solid gray;
+    height: 35px;
+}
+
+
+.spanBox{
+    width: 35px;
+    background-color: white;
+    border: 1px solid rgba(157, 157, 157, 0.556);
+    height: 35px;
+    margin-bottom: 15px;
+    display: block;
+}
+.boxTitle{
+    width: 35px;
+    background-color: rgb(8, 188, 243);
+    color: white;
+    font: 20px;
+    height: 35px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+
+
+}
+.boxGreen{
+    background-color: rgb(44, 206, 44);
+    color: white;
+    width: 35px;
+    border: 1px solid rgba(157, 157, 157, 0.556);
+    height: 35px;
+    margin-bottom: 15px;
+    display: flex;
+     justify-content: center;
+     align-items: center;
+}
+#gfg{
+    margin:35px
+}

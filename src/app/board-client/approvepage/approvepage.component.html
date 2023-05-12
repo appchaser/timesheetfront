@@ -1,0 +1,153 @@
+<mat-stepper headerPosition="bottom" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Step 1</ng-template>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">SELECT MEMBER: </div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4"><select class="form-select">
+              <option selected>select member</option>
+              <option *ngFor="let obj of listUsers" value="{{obj.id}}">{{obj.username}}</option>
+
+            </select></div>
+
+        </div>
+        <div class="row" style="margin-top: 30px;">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4"></div>
+
+          <div class="col-sm-4">
+            <button class="btn btn-success" matStepperNext> Next</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" >
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Step 2</ng-template>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">SELECT WEEK: </div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4"><select id="week" (change)="change($event)" style="justify-content: center; width: 100%; margin: 10%;">
+            <option selected>**select week**</option>
+            <option *ngFor="let obj of listTimesheet" value="{{obj.id}}">{{obj.date2_day| date}}-{{obj.date1_day| date}}</option>
+          </select></div>
+
+        </div>
+        <div class="row" style="margin-top: 30px;">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4"></div>
+
+          <div class="col-sm-4" style="display: flex; gap: 15px;">
+            <button class="btn btn-danger" matStepperNext> Back</button>
+
+            <button class="btn btn-success" matStepperNext> Next</button>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Step 3</ng-template>
+
+    <div class="row" style="margin-bottom: 5%;">
+      <div class="col-sm-4"><label>Client Name</label><br>
+        <select>
+          <option >select Client</option>
+          <option *ngFor="let obj of listClient" value="{{obj.id}}">{{obj.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4"><label>Project Name</label><br>
+        <select>
+          <option >select Project</option>
+          <option *ngFor="let obj of listPorjects" value="{{obj.id}}">{{obj.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4"> <label>Actvity Name</label><br>
+        <select>
+          <option >select Activity</option>
+          <option *ngFor="let obj of listActivites" value="{{obj.id}}">{{obj.shortName}}</option>
+
+        </select>
+      </div>
+
+    </div>
+    <div class="row" style="margin-bottom: 2%;">
+
+      <div class="col-sm-3" style="display: flex; flex-direction: row; ">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="col-md-5" style="display: flex; flex-direction: row;">
+        <div class="col">Mon</div>
+        <div class="col">Tues</div>
+        <div class="col">Wens</div>
+        <div class="col">Thurs</div>
+        <div class="col">Fri</div>
+        <div class="col">Sat</div>
+        <div class="col">Sun</div>
+      </div>
+      <div class="col-sm-3" style="display: flex; flex-direction: row;">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col">Desc</div>
+        <div class="col"></div>
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-bottom: 3%;">
+
+      <div class="col-sm-2" style="display: flex; flex-direction: row; ">
+        <div class="col"></div>
+        <div class="col"></div>
+
+      </div>
+      <div class="col-sm-6" style="display: flex; flex-direction: row;">
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date1_hours /></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date2_hours /></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date3_hours /></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date4_hours /></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date5_hours /></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date6_hours/></div>
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]=timeSheet.date7_hours /></div>
+      </div>
+      <div class="col-sm-3" style="display: flex; flex-direction: row;">
+        <div class="col"><input type="text" class="boxInput" [(ngModel)]="sum" /></div>
+        <div class="col"></div>
+        <div class="col"><textarea></textarea></div>
+        <div class="col"></div>
+      </div>
+
+    </div>
+    <div class="row"  style="margin: 5%;">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <mat-radio-group aria-label="Select an option" style="gap:15px">
+          <mat-radio-button value="1" style="margin-right: 15px;">Approve</mat-radio-button>
+          <mat-radio-button value="2">Refuse</mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4" style="gap: 1%; display: flex;"><button class="btn btn-danger" mat-button
+          matStepperPrevious>Back</button>
+        <button mat-button class=" btn btn-success" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>
