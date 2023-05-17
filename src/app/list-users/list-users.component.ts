@@ -15,7 +15,7 @@ export class ListUsersComponent implements OnInit {
 
   users:User[]
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'username', 'email', 'role' , 'delete'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'role' , 'delete', 'update'];
 
   constructor(private userService : UsersService, public dialog: MatDialog) { }
 
@@ -47,10 +47,27 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
+  openUpdateModal(user: User): void {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '400px',
+      data: { user, isSuccessful: null }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result.isSuccessful) {
+        const updatedData = (this.dataSource.data as User[]).map(u => u.id === result.user.id ? result.user : u);
+        this.dataSource.data = updatedData;
+      }
+    });
+  }
+
+
+
   deleteUser(user: User): void {
     this.userService.deleteUser(user.id).subscribe(() => {
-      this.users = this.users.filter(u => u.id !== user.id);
-    //  this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
+     // this.users = this.users.filter(u => u.id !== user.id);
+     this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
     });
 
   }

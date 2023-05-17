@@ -24,6 +24,11 @@ export class UsersService {
   }
 
 
+  updateUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.API_URL}/updateuser`, user);
+  }
+
+
   deleteUser(user:User){
     return this.httpClient.delete(`${this.API_URL}/deleteUser/${user.id}`);
   }
