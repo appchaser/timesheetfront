@@ -65,6 +65,8 @@
           <input type="checkbox" id="lead" value="ROLE_tec_lead" >Tech Lead &nbsp;
           <input type="checkbox" id="user" value="ROLE_USER" >User &nbsp;
           <input type="checkbox" id="admin" value="ROLE_ADMIN" >Admin
+
+
           <div class="alert-danger" *ngIf="password.errors && f.submitted">
             <div *ngIf="password.errors.required">Password is required</div>
             <div *ngIf="password.errors.minlength">

@@ -13,13 +13,16 @@ import { UserService } from '../_services/user.service';
 })
 export class ListUsersComponent implements OnInit {
 
+
   users:User[]
+  user:User
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['id', 'username', 'email', 'role' , 'delete', 'update'];
 
   constructor(private userService : UsersService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+
     this.userService.getAllUsers().subscribe( (res:any) => {
       let r : User[] = [] ;
       res.forEach((e:any) => {
@@ -36,7 +39,7 @@ export class ListUsersComponent implements OnInit {
   openAddModal(){
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '400px',
-      data: { user : null, isSuccessful: null}
+      data: { user : null, isSuccessful: null, roles: []}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -50,7 +53,7 @@ export class ListUsersComponent implements OnInit {
   openUpdateModal(user: User): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '400px',
-      data: { user, isSuccessful: null }
+      data: { user, isSuccessful: null ,roles: user.roles}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -59,10 +62,14 @@ export class ListUsersComponent implements OnInit {
         const updatedData = (this.dataSource.data as User[]).map(u => u.id === result.user.id ? result.user : u);
         this.dataSource.data = updatedData;
       }
+     // this.reloadPage()
     });
+
   }
 
-
+  reloadPage(): void {
+    window.location.reload();
+  }
 
   deleteUser(user: User): void {
     this.userService.deleteUser(user.id).subscribe(() => {

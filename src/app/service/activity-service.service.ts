@@ -20,4 +20,7 @@ httpOptions = {
   getAllActivities():Observable<Activities[]>{
     return this.httpClient.get<Activities[]>(`${this.API_URL}/getAll`);
   }
+  addActivity(data: any){
+    return this.httpClient.post<any>(`${this.API_URL}/addActivity`, data);
+  }
 }

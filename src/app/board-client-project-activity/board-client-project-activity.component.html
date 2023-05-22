@@ -1,0 +1,294 @@
+
+  <mat-tab-group>
+
+    <mat-tab label="Client Managment">
+      <div class="login-body">
+
+        <div class="card card-container">
+      <form
+
+        name="clientform"
+        (ngSubmit)="f.form.valid && addClient() "
+        #f="ngForm"
+        novalidate
+      >
+        <div class="form-group">
+          <label for="name">Client Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="clientform.name"
+            required
+            #name="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="name.errors && f.submitted"
+          >
+            name is required!
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-5">
+          <h2 class="heading-section">Clients Table</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-wrap">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Client ID</th>
+                  <th>Client Name</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let client of clients">
+                  <th scope="row" >{{client.id}}</th>
+                  <td>{{client.name}}</td>
+                  <td><a href="#" class="btn btn-success">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                  </td>
+
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    </mat-tab>
+    <mat-tab label="Project Managment">
+      <div class="login-body">
+        <div class="card card-container">
+        <form
+
+        name="projectform"
+        (ngSubmit)="fo.form.valid && addProject() "
+        #fo="ngForm"
+        novalidate
+      >
+      <div class="form-group">
+        <label for="client" class="form-label">Client</label>
+      <select class="form-select" id="sel1" name="client" [ngModel]="selectedClient"
+      (ngModelChange)="onChange($event)">
+        <option *ngFor="let client of clients" [value]="client.id">{{client.name}}</option>
+
+
+      </select>
+
+
+    </div>
+        <div class="form-group">
+          <label for="name">Project Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="projectform.name"
+            required
+            #name="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="name.errors && fo.submitted"
+          >
+            name is required!
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="start_date">start date</label>
+          <input
+            type="text"
+            class="form-control"
+            name="start_date"
+            [(ngModel)]="projectform.startDate"
+            required
+            #start_date="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="start_date.errors && fo.submitted"
+          >
+            start date is required!
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">end date</label>
+          <input
+            type="text"
+            class="form-control"
+            name="end_date"
+            [(ngModel)]="projectform.endDate"
+            required
+            #end_date="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="end_date.errors && fo.submitted"
+          >
+            end date is required!
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Add
+          </button>
+        </div>
+      </form>
+        </div>
+      </div>
+      <section class="ftco-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+              <h2 class="heading-section">Projects Table </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-wrap">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Project ID</th>
+                      <th>Project Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Action</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let project of projects">
+                      <th scope="row" >{{project.id}}</th>
+                      <td>{{project.name}}</td>
+                      <td>{{project.startDate}}</td>
+                      <td>{{project.endDate}}</td>
+                      <td><a href="#" class="btn btn-success">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                      </td>
+
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+    <mat-tab label="Activity Managment">
+      <div class="login-body">
+        <div class="card card-container">
+        <form
+
+        name="activityform"
+        (ngSubmit)="for.form.valid && addActivity() "
+        #for="ngForm"
+        novalidate
+      >
+      <div class="form-group">
+        <label for="client" class="form-label">Project</label>
+      <select class="form-select" id="sel1" name="project" [ngModel]="selectedProject"
+      (ngModelChange)="onChangeActivity($event)">
+        <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+
+
+      </select>
+
+
+    </div>
+        <div class="form-group">
+          <label for="shortName">Activity Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="shortName"
+            [(ngModel)]="activityform.shortName"
+            required
+            #name="ngModel"
+          />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="name.errors && fo.submitted"
+          >
+            name is required!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Add
+          </button>
+        </div>
+      </form>
+        </div>
+      </div>
+      <section class="ftco-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+              <h2 class="heading-section">Activities Table </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-wrap">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Activity ID</th>
+                      <th>Project </th>
+                      <th>Activity Name</th>
+                      <th>Action</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let activity of activities">
+                      <th scope="row" >{{activity.id}}</th>
+                      <td *ngIf=" activity.projects[0] == undefined "></td>
+                      <td *ngIf=" activity.projects[0] != undefined ">{{activity.projects[0].name}}</td>
+                      <td>{{activity.shortName}}</td>
+                      <td><a href="#" class="btn btn-success">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                      </td>
+
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </mat-tab>
+  </mat-tab-group>
+

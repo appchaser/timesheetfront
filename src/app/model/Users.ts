@@ -5,9 +5,12 @@ export class User{
 
   password:any;
 
-  role: string;
-
-
+  roles:Role[]
+ // roles: { id: number; name: string; }[];
 
 }
 
+export interface Role {
+  id: number;
+  name: string;
+}

@@ -22,4 +22,11 @@ export class ProjectService {
   getProjectById(id:number):Observable<projetdt>{
     return this.httpClient.get<projetdt>(`${this.API_URL}/getactivity/${id}`);
   }
+  addProject(data: any){
+    return this.httpClient.post<any>(`${this.API_URL}/addproject`, data);
+  }
+
+  afectProjectActivity(idProject: Number , idActivity: Number){
+    return this.httpClient.post<any>(`${this.API_URL}/addactivitytoproject/${idProject}/${idActivity}`, null);
+  }
 }

@@ -36,8 +36,10 @@ import { ListUsersComponent } from './list-users/list-users.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { BoardClientProjectActivityComponent } from './board-client-project-activity/board-client-project-activity.component';
 
-
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,11 +57,13 @@ import { MatButtonModule } from '@angular/material/button';
     AddpageComponent,
     ShowpageComponent,
     ApprovepageComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    BoardClientProjectActivityComponent
   ],
   imports: [
+    MatSelectModule,
     MatIconModule,
-
+    MatTabsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

@@ -25,4 +25,10 @@ export class ClientService{
   getClientById(id:number):Observable<Clientdto>{
     return this.httpClient.get<Clientdto>(`${this.API_URL}/project/${id}`);
   }
+  afectClientProject(idClient: Number , idProject: Number){
+    return this.httpClient.post<any>(`${this.API_URL}/addclienttoproject/${idProject}/${idClient}`, null);
+  }
+  addClient(name: string){
+    return this.httpClient.post<any>(`${this.API_URL}/addClient`, {name});
+  }
 }

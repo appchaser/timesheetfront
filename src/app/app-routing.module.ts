@@ -16,11 +16,11 @@ import { ApprovepageComponent } from './board-client/approvepage/approvepage.com
 import { ListUsersComponent } from './list-users/list-users.component';
 
 
-
+import {BoardClientProjectActivityComponent  } from './board-client-project-activity/board-client-project-activity.component';
 
 
 const routes: Routes = [
-
+  { path: 'projectManagment', component: BoardClientProjectActivityComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'director', component: BoardDirectorProjectComponent },
   { path: 'list-users', component: ListUsersComponent },
+
  // { path: 'home', component: BoardClientComponent, children: [{ path: 'add', component: AddpageComponent }, { path: 'show', component: ShowpageComponent }, { path: 'approve', component: ApprovepageComponent }] },
 ];
 

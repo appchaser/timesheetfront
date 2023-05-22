@@ -18,6 +18,7 @@ import { UsersService } from '../service/user.service';
 
 
 export class RegisterComponent implements OnInit {
+  roles: { id: number, name: string }[];
   form: any = {
     id: Number,
     username: null,
@@ -35,14 +36,30 @@ export class RegisterComponent implements OnInit {
     //   this.form = { ...this.user };
 
     // }
+    this.roles = this.data.roles;
 
     if (this.data.user) {
       this.form.id = this.data.user.id;
       this.form.username = this.data.user.username;
       this.form.email = this.data.user.email;
       this.form.roles = this.data.user.roles;
+      //this.updateRoleCheckboxes();
     }
   }
+  // updateRoleCheckboxes(): void {
+  //   Assuming you have a variable `user` of type `User`
+  //   const user = this.data.user;
+
+  //   Check if the user has a role
+  //   if (user && user.role) {
+  //     Iterate over the roles and mark the corresponding checkboxes as checked
+  //     this.roles.forEach(role => {
+  //       if (role.name === user.role) {
+  //         (document.getElementById(role.name) as HTMLInputElement).checked = true;
+  //       }
+  //     });
+  //   }
+  // }
 
   onSubmit(): void {
     let roles = [] ;
@@ -76,9 +93,10 @@ export class RegisterComponent implements OnInit {
       username: this.form.username,
       email: this.form.email,
       password: this.form.password,
-      role: _roles,
-
+     roles: roles,
+    // roles: []
     };
+
     if (user.id) {
       // Update existing user
       this.userservice.updateUser(user).subscribe(
