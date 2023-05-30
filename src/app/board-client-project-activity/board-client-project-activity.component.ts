@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../service/client-service.service';
 import { ProjectService } from '../service/project-service.service';
 import { ActivityService } from '../service/activity-service.service';
-
-
+import {Client} from '../model/Client';
+import {Project} from '../model/Project';
+import {Activities} from '../model/Activities'
 interface Food {
   value: string;
   viewValue: string;
@@ -16,9 +17,11 @@ interface Food {
   styleUrls: ['./board-client-project-activity.component.css']
 })
 export class BoardClientProjectActivityComponent implements OnInit {
-  clients: any[];
-  projects: any[];
-  activities: any[];
+ // clients: any[];
+  clients: Client[] = [];
+
+  projects: Project[]=[];
+  activities: Activities[]=[];
   selectedClient: any;
   selectedProject: any;
 
@@ -94,9 +97,11 @@ export class BoardClientProjectActivityComponent implements OnInit {
     const { name } = this.clientform;
     this.clientService.addClient(name).subscribe(
       (res) => {
-
+        const addedClient: Client = res;
+      this.clients.push(addedClient);
 
       },
+
       (err) => {
 
 
@@ -105,41 +110,43 @@ export class BoardClientProjectActivityComponent implements OnInit {
   }
 
   addProject(){
-    let project = this.projectform;
+    const project = this.projectform;
 
     this.projectService.addProject(project).subscribe(
       (res) => {
 
         console.log(res);
 
+        const addedProject: Project = res;
+
+      // Update the project list
+      this.projects.push(addedProject);
+
+      // Optionally, you can clear the form after adding the project
+      this.projectform = { name: '', description: '' };
         this.clientService.afectClientProject(this.selectedClient , res.id).subscribe(
           (result) => {
             console.log(result)
           }
         )
-
-
       },
       (err) => {
-
-
       }
     );
-
-
-
-
-
-
   }
 
   addActivity(){
-    let activity = this.activityform;
+    const newActivity = this.activityform;
 
-    this.activityService.addActivity(activity).subscribe(
+    this.activityService.addActivity(newActivity).subscribe(
       (res) => {
 
         console.log(res);
+        const addedActivity: Activities = res;
+
+        // Update the activity list or perform any other required actions
+        this.activities.push(addedActivity);
+
 
         this.projectService.afectProjectActivity(this.selectedProject , res.id).subscribe(
           (result) => {

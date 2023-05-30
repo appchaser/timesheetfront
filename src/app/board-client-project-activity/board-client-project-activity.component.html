@@ -104,7 +104,7 @@
             class="form-control"
             name="name"
             [(ngModel)]="projectform.name"
-            required
+
             #name="ngModel"
           />
           <div
@@ -112,7 +112,7 @@
             role="alert"
             *ngIf="name.errors && fo.submitted"
           >
-            name is required!
+
           </div>
         </div>
         <div class="form-group">
@@ -122,7 +122,7 @@
             class="form-control"
             name="start_date"
             [(ngModel)]="projectform.startDate"
-            required
+
             #start_date="ngModel"
           />
           <div
@@ -130,7 +130,7 @@
             role="alert"
             *ngIf="start_date.errors && fo.submitted"
           >
-            start date is required!
+
           </div>
         </div>
         <div class="form-group">
@@ -140,15 +140,16 @@
             class="form-control"
             name="end_date"
             [(ngModel)]="projectform.endDate"
-            required
+
             #end_date="ngModel"
           />
           <div
             class="alert alert-danger"
             role="alert"
             *ngIf="end_date.errors && fo.submitted"
+
           >
-            end date is required!
+
           </div>
         </div>
         <div class="form-group">
@@ -174,21 +175,29 @@
                     <tr>
                       <th>Project ID</th>
                       <th>Project Name</th>
+
                       <th>Start Date</th>
                       <th>End Date</th>
+                      <th> Client </th>
                       <th>Action</th>
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let project of projects">
+
                       <th scope="row" >{{project.id}}</th>
                       <td>{{project.name}}</td>
+
                       <td>{{project.startDate}}</td>
                       <td>{{project.endDate}}</td>
+                      <!-- <td>{{project.client[0].name}}</td> -->
+                      <td *ngIf=" project.client[0] == undefined "></td>
+                      <td *ngIf=" project.client[0] != undefined ">{{project.client[0].name}}</td>
                       <td><a href="#" class="btn btn-success">Edit</a>
                         <a href="#" class="btn btn-danger">Delete</a>
                       </td>
+
 
                     </tr>
 
@@ -237,7 +246,7 @@
             role="alert"
             *ngIf="name.errors && fo.submitted"
           >
-            name is required!
+
           </div>
         </div>
 
@@ -264,6 +273,7 @@
                     <tr>
                       <th>Activity ID</th>
                       <th>Project </th>
+                      <!-- <th>client</th> -->
                       <th>Activity Name</th>
                       <th>Action</th>
 
@@ -274,6 +284,7 @@
                       <th scope="row" >{{activity.id}}</th>
                       <td *ngIf=" activity.projects[0] == undefined "></td>
                       <td *ngIf=" activity.projects[0] != undefined ">{{activity.projects[0].name}}</td>
+                      <!-- <td>{{activity.clients[0].name}}</td> -->
                       <td>{{activity.shortName}}</td>
                       <td><a href="#" class="btn btn-success">Edit</a>
                         <a href="#" class="btn btn-danger">Delete</a>

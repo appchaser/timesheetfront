@@ -1,7 +1,7 @@
 export class User{
     id:any
     username:any;
-    email:string;
+    email:any;
 
   password:any;
 
@@ -11,6 +11,6 @@ export class User{
 }
 
 export interface Role {
-  id: number;
-  name: string;
+  id: any;
+  name: any;
 }

@@ -73,8 +73,8 @@ export class ListUsersComponent implements OnInit {
 
   deleteUser(user: User): void {
     this.userService.deleteUser(user.id).subscribe(() => {
-     // this.users = this.users.filter(u => u.id !== user.id);
-     this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
+      this.users = this.users.filter(u => u.id !== user.id);
+    /// this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
     });
 
   }
