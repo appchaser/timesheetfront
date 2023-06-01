@@ -5,6 +5,7 @@ import { ActivityService } from '../service/activity-service.service';
 import {Client} from '../model/Client';
 import {Project} from '../model/Project';
 import {Activities} from '../model/Activities'
+import { MatTableDataSource } from '@angular/material/table';
 interface Food {
   value: string;
   viewValue: string;
@@ -18,10 +19,16 @@ interface Food {
 })
 export class BoardClientProjectActivityComponent implements OnInit {
  // clients: any[];
-  clients: Client[] = [];
+  _clients: Client[] = [];
+  clients = new MatTableDataSource();
+  displayedColumns: string[] = ['id', 'clientName', 'delete', 'update'];
+  displayedColumns1: string[] = ['id', 'client','project_name','start_date','end_date', 'delete', 'update'];
+  displayedColumns2:string[] = ['id', 'project','activity', 'delete', 'update'];
 
-  projects: Project[]=[];
-  activities: Activities[]=[];
+  _projects: Project[]=[];
+  projects = new MatTableDataSource();
+  _activities: Activities[]=[];
+  activities = new MatTableDataSource();
   selectedClient: any;
   selectedProject: any;
 
@@ -59,8 +66,8 @@ export class BoardClientProjectActivityComponent implements OnInit {
 
    allClients(){
     this.clientService.getAllClient().subscribe((result) => {
-      this.clients = result;
-      console.log(this.clients)
+      this.clients.data = result;
+      this._clients = result;
 
     });
 
@@ -70,8 +77,8 @@ export class BoardClientProjectActivityComponent implements OnInit {
 
   allProjects(){
     this.projectService.getAllProject().subscribe((result) => {
-      this.projects = result;
-      console.log(this.projects)
+      this.projects.data = result;
+      this._projects = result;
 
     });
 
@@ -81,52 +88,60 @@ export class BoardClientProjectActivityComponent implements OnInit {
 
   allActivities(){
     this.activityService.getAllActivities().subscribe((result) => {
-      this.activities = result;
-      console.log(this.activities)
-
-
+      this.activities.data= result;
+      this._activities= result;
     });
 
 
 
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.clients.filter = filterValue.trim().toLowerCase();
+  }
 
+  applyFilterForProject(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.projects.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyFilterForActivity(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.activities.filter = filterValue.trim().toLowerCase();
+  }
 
   addClient(){
     const { name } = this.clientform;
     this.clientService.addClient(name).subscribe(
       (res) => {
         const addedClient: Client = res;
-      this.clients.push(addedClient);
-
+      this.clients.data.push(addedClient);
+      this.clients._updateChangeSubscription();
       },
 
       (err) => {
 
-
       }
     );
   }
-
   addProject(){
     const project = this.projectform;
-
     this.projectService.addProject(project).subscribe(
       (res) => {
-
         console.log(res);
 
         const addedProject: Project = res;
 
       // Update the project list
-      this.projects.push(addedProject);
+      this.projects.data.push(addedProject);
 
       // Optionally, you can clear the form after adding the project
       this.projectform = { name: '', description: '' };
         this.clientService.afectClientProject(this.selectedClient , res.id).subscribe(
           (result) => {
             console.log(result)
+            this.projects._updateChangeSubscription();
           }
         )
       },
@@ -137,16 +152,14 @@ export class BoardClientProjectActivityComponent implements OnInit {
 
   addActivity(){
     const newActivity = this.activityform;
-
     this.activityService.addActivity(newActivity).subscribe(
       (res) => {
-
         console.log(res);
         const addedActivity: Activities = res;
 
         // Update the activity list or perform any other required actions
-        this.activities.push(addedActivity);
-
+        this.activities.data.push(addedActivity);
+          this.activities._updateChangeSubscription();
 
         this.projectService.afectProjectActivity(this.selectedProject , res.id).subscribe(
           (result) => {

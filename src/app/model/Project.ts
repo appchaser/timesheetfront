@@ -5,6 +5,6 @@ export class Project{
     name: any;
     startDate: any;
     endDate: any;
-    client: ClientD[];
+    client: ClientD;
     activity: any;
 }

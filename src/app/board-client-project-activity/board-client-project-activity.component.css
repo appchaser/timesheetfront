@@ -30,3 +30,17 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.mp {
+  margin-right: 5%;
+  margin-left: 5%;
+}
+

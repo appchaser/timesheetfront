@@ -17,7 +17,7 @@ export class ListUsersComponent implements OnInit {
   users:User[]
   user:User
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'username', 'email', 'role' , 'delete', 'update'];
+  displayedColumns: string[] = ['id', 'username','client', 'email', 'role' , 'delete', 'update'];
 
   constructor(private userService : UsersService, public dialog: MatDialog) { }
 
