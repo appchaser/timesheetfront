@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../model/Users';
 import { RegisterComponent } from '../register/register.component';
 import { UsersService } from '../service/user.service';
 import { UserService } from '../_services/user.service';
-
+import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
@@ -16,8 +16,10 @@ export class ListUsersComponent implements OnInit {
 
   users:User[]
   user:User
-  dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'username','client', 'email', 'role' , 'delete', 'update'];
+  //dataSource = new MatTableDataSource();
+  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
+  @ViewChild('myTable') table: MatTable<any>;
+  displayedColumns: string[] = ['id', 'username', 'email', 'role' , 'delete', 'update'];
 
   constructor(private userService : UsersService, public dialog: MatDialog) { }
 
@@ -72,12 +74,16 @@ export class ListUsersComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
+    if (user.id){
     this.userService.deleteUser(user.id).subscribe(() => {
+      this.dataSource.data = this.dataSource.data.filter((u: User) => u.id !== user.id);
       this.users = this.users.filter(u => u.id !== user.id);
-    /// this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
+    this.dataSource.data = this.dataSource.data.filter(u => (u as User).id !== user.id) as User[];
+    },(error) => {
+      console.log(error); // Log any error that occurs during the delete request
     });
+  }}
 
-  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

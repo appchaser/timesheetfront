@@ -89,7 +89,7 @@
       <div class="col"><select [(ngModel)]="selectedProjectId" (change)="showActivity()" style="width: 50px;">
           <option>select Project</option>
           <option *ngFor="let obj of projects" value="{{obj.id}}">{{obj.name}}</option>
-        </select></div>
+        </select> </div>
       <div class="col"><select [(ngModel)]="selectedActivityId" style="width: 50px;">
           <option>select Activity</option>
           <option *ngFor="let obj of activity" value="{{obj.id}}">{{obj.name}}</option>

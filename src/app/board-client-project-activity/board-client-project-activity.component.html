@@ -42,7 +42,7 @@
   <div class="mp">
     <mat-form-field appearance="standard">
       <mat-label>search for client</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex." #input>
+    <input matInput (keyup)="applyFilter($event)" placeholder="input client name" #input>
   </mat-form-field>
 
   <table mat-table [dataSource]="clients" class="mat-elevation-z8">
@@ -107,10 +107,7 @@
       (ngModelChange)="onChange($event)">
         <option *ngFor="let client of _clients" [value]="client.id">{{client.name}}</option>
 
-
       </select>
-
-
     </div>
         <div class="form-group">
           <label for="name">Project Name</label>
@@ -122,13 +119,13 @@
 
             #name="ngModel"
           />
-          <div
+          <!-- <div
             class="alert alert-danger"
             role="alert"
             *ngIf="name.errors && fo.submitted"
           >
 
-          </div>
+          </div> -->
         </div>
         <div class="form-group">
           <label for="start_date">start date</label>
@@ -276,13 +273,7 @@
             required
             #name="ngModel"
           />
-          <div
-            class="alert alert-danger"
-            role="alert"
-            *ngIf="name.errors && fo.submitted"
-          >
 
-          </div>
         </div>
 
         <div class="form-group">
@@ -324,7 +315,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef >delete </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn" matTooltip="delete project">
+          <button mat-icon-button color="warn" matTooltip="delete activity">
             <mat-icon aria-label="Delete user">delete</mat-icon>
           </button>
         </td>
@@ -333,7 +324,7 @@
       <ng-container matColumnDef="update">
         <th mat-header-cell *matHeaderCellDef> edit</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" matTooltip="edit project">
+          <button mat-icon-button color="primary" matTooltip="edit activity">
             <mat-icon aria-label="Update user">edit</mat-icon>
           </button>
         </td>
@@ -348,49 +339,91 @@
         </tr>
       </table>
       </div>
+     </mat-tab>
 
-      <!-- <section class="ftco-section">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-              <h2 class="heading-section">Activities Table </h2>
-            </div>
-          </div>
+     <mat-tab label="affect user to project">
+      <div class="login-body">
+
+        <div class="card card-container">
+
+        <div class="form-group">
           <div class="row">
-            <div class="col-md-12">
-              <div class="table-wrap">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Activity ID</th>
-                      <th>Project </th>
+            <!-- <div class="col-sm-3" style="display: flex; flex-direction: row; "> -->
+              <h1>Clients:</h1>
+              <div class="col-sm-3">
 
-                       <th>Activity Name</th>
-                      <th>Action</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let activity of activities">
-                      <th scope="row" >{{activity.id}}</th>
-                      <td *ngIf=" activity.projects[0] == undefined "></td>
-                      <td *ngIf=" activity.projects[0] != undefined ">{{activity.projects[0].name}}</td>
-
-                      <td>{{activity.shortName}}</td>
-                      <td><a href="#" class="btn btn-success">Edit</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                      </td>
-
-                    </tr>
-
-
-                  </tbody>
-                </table>
+                <select [(ngModel)]="selectedClientId" name="clientId" style="width: 90px;" (change)="showProject()">
+                  <option value="">select Client</option>
+                  <option *ngFor="let obj of listClient" [value]="obj.id" >{{obj.name}}</option>
+                </select>
               </div>
-            </div>
+              </div>
+              <div class="row mt-2" >
+              <h1>projects:</h1>
+              <div class="col-sm-3">
+            <select [(ngModel)]="selectedProjectId" name="projectId" style="width: 110px;">
+              <option value="">select Project</option>
+              <option *ngFor="let obj of projectss" [value]="obj.id">{{obj.name}}</option>
+            </select>
+           </div>
           </div>
         </div>
-      </section> -->
-     </mat-tab>
-  </mat-tab-group>
+        <div class="form-group" >
+          <button class="btn btn-primary btn-block">
+            affect user
+          </button>
+        </div>
+
+    </div>
+  </div>
+
+  <div class="mp">
+    <mat-form-field appearance="standard">
+      <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="user name" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    </ng-container>
+
+
+
+
+     <!-- Delete Column -->
+
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>/
+</div>
 

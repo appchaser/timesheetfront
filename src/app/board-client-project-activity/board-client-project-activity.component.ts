@@ -5,7 +5,10 @@ import { ActivityService } from '../service/activity-service.service';
 import {Client} from '../model/Client';
 import {Project} from '../model/Project';
 import {Activities} from '../model/Activities'
+import { User } from '../model/Users';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from '../_services/user.service';
+import { UsersService } from '../service/user.service';
 interface Food {
   value: string;
   viewValue: string;
@@ -20,10 +23,15 @@ interface Food {
 export class BoardClientProjectActivityComponent implements OnInit {
  // clients: any[];
   _clients: Client[] = [];
+  users:User[]
+  user:User
+  dataSource = new MatTableDataSource();
   clients = new MatTableDataSource();
   displayedColumns: string[] = ['id', 'clientName', 'delete', 'update'];
   displayedColumns1: string[] = ['id', 'client','project_name','start_date','end_date', 'delete', 'update'];
   displayedColumns2:string[] = ['id', 'project','activity', 'delete', 'update'];
+  displayedColumns3:string[]=['id','username','email','role']
+
 
   _projects: Project[]=[];
   projects = new MatTableDataSource();
@@ -47,31 +55,40 @@ export class BoardClientProjectActivityComponent implements OnInit {
     shortName: null
   }
   errorMessage = '';
-
-  constructor(private clientService: ClientService , private projectService : ProjectService , private activityService : ActivityService) { }
+  listClient!: Client[]
+  listPorjects!: Project[]
+  constructor(private clientService: ClientService ,private userservice: UsersService, private projectService : ProjectService , private activityService : ActivityService) { }
 
   ngOnInit(): void {
 
     this.allClients();
     this.allProjects();
     this.allActivities();
-
-
+    this.getAll();
+    this.userservice.getAllUsers().subscribe( (res:any) => {
+      let r : User[] = [] ;
+      res.forEach((e:any) => {
+        let roles = "";
+        e.roles.forEach((role:any) => {roles +=  role.name + " " });
+        r.push({
+          ...e,
+          role : roles
+        })
+      })
+      this.dataSource.data = r;
+    })
   }
 
-
-
-
-
+  getAll() {
+    this.clientService.getAllClient().subscribe(res => { this.listClient = res });
+    this.projectService.getAllProject().subscribe(res => { this.listPorjects = res;console.log(res) });
+  }
 
    allClients(){
     this.clientService.getAllClient().subscribe((result) => {
       this.clients.data = result;
       this._clients = result;
-
     });
-
-
 
   }
 
@@ -81,9 +98,19 @@ export class BoardClientProjectActivityComponent implements OnInit {
       this._projects = result;
 
     });
+  }
 
+projectss:any;
+selectedClientId:any;
+selectedProjectId:any;
 
-
+  showProject(){
+    console.log(this.selectedProjectId)
+    this.clientService.getClientById(this.selectedClientId).subscribe(
+      res => {
+        this.projectss = res.projects;
+      }
+    )
   }
 
   allActivities(){
@@ -91,9 +118,6 @@ export class BoardClientProjectActivityComponent implements OnInit {
       this.activities.data= result;
       this._activities= result;
     });
-
-
-
   }
 
   applyFilter(event: Event) {
@@ -119,9 +143,26 @@ export class BoardClientProjectActivityComponent implements OnInit {
       this.clients.data.push(addedClient);
       this.clients._updateChangeSubscription();
       },
-
       (err) => {
+      }
+    );
+  }
+  addActivity(){
+    const newActivity = this.activityform;
+    this.activityService.addActivity(newActivity).subscribe(
+      (res) => {
+        const addedActivity: Activities = res;
+        // Update the activity list or perform any other required actions
+        this.activities.data.push(addedActivity);
+        this.activities._updateChangeSubscription();
+        this.projectService.afectProjectActivity(this.selectedProject , res.id).subscribe(
+          (result) => {
+            console.log(result)
+          }
+        )
 
+      },
+      (err) => {
       }
     );
   }
@@ -150,37 +191,6 @@ export class BoardClientProjectActivityComponent implements OnInit {
     );
   }
 
-  addActivity(){
-    const newActivity = this.activityform;
-    this.activityService.addActivity(newActivity).subscribe(
-      (res) => {
-        console.log(res);
-        const addedActivity: Activities = res;
-
-        // Update the activity list or perform any other required actions
-        this.activities.data.push(addedActivity);
-          this.activities._updateChangeSubscription();
-
-        this.projectService.afectProjectActivity(this.selectedProject , res.id).subscribe(
-          (result) => {
-            console.log(result)
-          }
-        )
-
-
-      },
-      (err) => {
-
-
-      }
-    );
-
-
-
-
-
-
-  }
 
   onChange(event: any) {
 

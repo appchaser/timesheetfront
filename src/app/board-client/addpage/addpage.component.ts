@@ -122,7 +122,7 @@ export class AddpageComponent implements OnInit {
       this.userId = this.tokenstorage.getUser().id;
 
       this.timesheetservice.addTimeSheet(element, this.selectedProjectId, this.userId, this.selectedActivityId, this.selectedClientId).subscribe(x => {
-       
+
        })
     })
   }
@@ -216,16 +216,12 @@ export class AddpageComponent implements OnInit {
   showProject(){
     console.log(this.selectedProjectId)
     this.clientService.getClientById(this.selectedClientId).subscribe(
-
       res => {
         this.projects = res.projects;
       }
     )
   }
-
   validate(val : number){
-
-
   }
 
   showActivity(){

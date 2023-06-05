@@ -29,8 +29,8 @@ export class UsersService {
   }
 
 
-  deleteUser(user:User){
-    return this.httpClient.delete(`${this.API_URL}/deleteUser/${user.id}`);
+  deleteUser(id: number){
+    return this.httpClient.delete(`${this.API_URL}/deleteUser/${id}`);
   }
 
 }
