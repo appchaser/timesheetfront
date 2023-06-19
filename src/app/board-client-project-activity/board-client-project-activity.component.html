@@ -31,8 +31,8 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block">
-            Add
+          <button class="btn btn-primary btn-block" (click)="openSnackBar('client was successfully added')">
+            Add Client
           </button>
         </div>
       </form>
@@ -64,7 +64,7 @@
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef >delete </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="warn" matTooltip="delete client">
+      <button mat-icon-button color="warn" matTooltip="delete client" (click)="deleteclient(element)">
         <mat-icon aria-label="Delete user">delete</mat-icon>
       </button>
     </td>
@@ -133,6 +133,7 @@
             type="text"
             class="form-control"
             name="start_date"
+            placeholder="yyyy-mm-dd"
             [(ngModel)]="projectform.startDate"
 
             #start_date="ngModel"
@@ -149,6 +150,7 @@
           <label for="name">end date</label>
           <input
             type="text"
+            placeholder="yyyy-mm-dd"
             class="form-control"
             name="end_date"
             [(ngModel)]="projectform.endDate"
@@ -165,8 +167,8 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block">
-            Add
+          <button class="btn btn-primary btn-block" (click)="openSnackBar('Project was successfully added')">
+            Add project
           </button>
         </div>
       </form>
@@ -215,7 +217,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef >delete </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn" matTooltip="delete project">
+          <button mat-icon-button color="warn" matTooltip="delete project" (click)="deleteproject(element)"  >
             <mat-icon aria-label="Delete user">delete</mat-icon>
           </button>
         </td>
@@ -315,7 +317,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef >delete </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn" matTooltip="delete activity">
+          <button mat-icon-button color="warn" matTooltip="delete activity" (click)="deleteactivity(element)">
             <mat-icon aria-label="Delete user">delete</mat-icon>
           </button>
         </td>
@@ -342,40 +344,73 @@
      </mat-tab>
 
      <mat-tab label="affect user to project">
-      <div class="login-body">
+      <form class="example-form"  >
 
-        <div class="card card-container">
+        <div class="login-body">
 
-        <div class="form-group">
-          <div class="row">
-            <!-- <div class="col-sm-3" style="display: flex; flex-direction: row; "> -->
-              <h1>Clients:</h1>
-              <div class="col-sm-3">
+          <div class="card card-container">
+            <div class="form-group">
 
-                <select [(ngModel)]="selectedClientId" name="clientId" style="width: 90px;" (change)="showProject()">
-                  <option value="">select Client</option>
-                  <option *ngFor="let obj of listClient" [value]="obj.id" >{{obj.name}}</option>
-                </select>
-              </div>
-              </div>
-              <div class="row mt-2" >
-              <h1>projects:</h1>
-              <div class="col-sm-3">
-            <select [(ngModel)]="selectedProjectId" name="projectId" style="width: 110px;">
-              <option value="">select Project</option>
-              <option *ngFor="let obj of projectss" [value]="obj.id">{{obj.name}}</option>
-            </select>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <input type="text"
+                      placeholder="choose client"
+                      matInput
+                      [formControl]="clientControl"
+                      [matAutocomplete]="client">
+              <mat-autocomplete #client="matAutocomplete" [displayWith]="displayFn"
+                      (optionSelected)="showProject($event)">
+                <mat-option *ngFor="let option of clientFilteredOptions | async" [value]="option">
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Project</mat-label>
+              <input type="text"
+                     placeholder="choose project"
+                     matInput
+                     [formControl]="projectControl"
+                     [matAutocomplete]="project">
+              <mat-autocomplete  #project="matAutocomplete" [displayWith]="displayProject"
+
+              >
+
+                <mat-option *ngFor="let option of projectFilteredOptions | async" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>user</mat-label>
+              <input type="text"
+                     placeholder="choose user"
+                     matInput
+                     [formControl]="userControl"
+                     [matAutocomplete]="user">
+              <mat-autocomplete #user="matAutocomplete" [displayWith]="displayUser"
+
+              >
+
+                <mat-option *ngFor="let option of userfilteredOptions | async" [value]="option">
+                  {{option.username}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
            </div>
           </div>
         </div>
         <div class="form-group" >
-          <button class="btn btn-primary btn-block">
+          <button class="btn btn-primary btn-block"  >
             affect user
           </button>
         </div>
 
-    </div>
-  </div>
+      <!-- </div> -->
+    <!-- </div> -->
+  </form>
 
   <div class="mp">
     <mat-form-field appearance="standard">

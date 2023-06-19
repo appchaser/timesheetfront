@@ -29,4 +29,9 @@ export class ProjectService {
   afectProjectActivity(idProject: Number , idActivity: Number){
     return this.httpClient.post<any>(`${this.API_URL}/addactivitytoproject/${idProject}/${idActivity}`, null);
   }
+
+  deleteProject(id: number){
+    return this.httpClient.delete(`${this.API_URL}/deleteproject/${id}`);
+  }
+
 }

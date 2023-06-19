@@ -1,5 +1,5 @@
 export class Activities {
-    id: any
+    id: number
     shortName: any;
     projects:any
 

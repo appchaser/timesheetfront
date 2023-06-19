@@ -37,10 +37,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { BoardClientProjectActivityComponent } from './board-client-project-activity/board-client-project-activity.component';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NgbModule,
     MatTableModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatSnackBarModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [authInterceptorProviders, { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }],

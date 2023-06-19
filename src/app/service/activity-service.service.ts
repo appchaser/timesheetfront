@@ -23,4 +23,9 @@ httpOptions = {
   addActivity(data: any){
     return this.httpClient.post<any>(`${this.API_URL}/addActivity`, data);
   }
+
+  deleteActivity(id: number){
+    return this.httpClient.delete(`${this.API_URL}/deleteActivity/${id}`);
+  }
+
 }
